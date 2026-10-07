@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vickrey Auction Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- LANDING PAGE -->
+    <div id="landing-page" class="landing-page">
+        <div class="landing-hero">
+            <h1>Auction Arena</h1>
+            <h2>Where Strategy Meets Bidding</h2>
+            <p class="hero-desc">Enter a strategic auction where your private valuation guides your bidding decision. Compete against three computer bidders and win items by making smart bids.</p>
+            <button id="start-auction-btn" class="primary-btn hero-btn">START AUCTION &rarr;</button>
+        </div>
+
+        <div class="landing-content">
+            <div class="two-col-grid">
+                <section class="info-section">
+                    <h3>WHAT IS THE GAME?</h3>
+                    <p>Auction Arena is a sealed-bid auction where each bidder submits a bid without seeing other bidders' bids. The highest bidder wins, but pays the second-highest bid rather than their own bid.</p>
+                </section>
+
+                <section class="info-section">
+                    <h3>GAME OBJECTIVE</h3>
+                    <p>Your goal is not simply to win auctions. Make strategic bids that generate positive utility by balancing your private valuation, competition, and the payment you may make if you win.</p>
+                </section>
+            </div>
+
+            <section class="info-section">
+                <h3>WHAT MAKES THIS GAME STRATEGIC?</h3>
+                <p class="evaluation-intro" style="margin-bottom: 2rem;">Winning an auction is not the only goal. Your performance also depends on how much value you gain from each successful bid.</p>
+                <div class="two-col-grid" style="margin-bottom: 2rem;">
+                    <div class="eval-card">
+                        <div class="eval-icon">🏆</div>
+                        <h5>CAN I WIN?</h5>
+                        <p>Place a competitive bid and try to win the auction.</p>
+                    </div>
+                    <div class="eval-card">
+                        <div class="eval-icon">💰</div>
+                        <h5>AM I GETTING ENOUGH VALUE?</h5>
+                        <p>Winning is not always beneficial. Your utility depends on your private valuation and the payment you make.</p>
+                    </div>
+                </div>
+                <div class="utility-note" style="text-align: center;">
+                    <strong>The goal is not to win every auction &mdash; it is to make efficient bidding decisions that maximize your overall utility.</strong>
+                    <br><span style="font-size: 0.85em; opacity: 0.8;">Win smart. Maximize your utility.</span>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <h3>GAME RULES</h3>
+                <div class="rules-compact-grid">
+                    <div class="rule-card">1 Human + 3 Computers</div>
+                    <div class="rule-card">8 Auction Rounds</div>
+                    <div class="rule-card">Hidden Valuations</div>
+                    <div class="rule-card">Highest Bid Wins</div>
+                    <div class="rule-card">Second-Highest Payment</div>
+                    <div class="rule-card">Utility = Valuation &minus; Payment</div>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <h3>HOW IT WORKS</h3>
+                <div class="steps-compact-grid">
+                    <div class="step-card-compact">
+                        <div class="step-num-compact">01</div>
+                        <div>
+                            <h4>Receive Valuation</h4>
+                            <p>Private item value</p>
+                        </div>
+                    </div>
+                    <div class="step-card-compact">
+                        <div class="step-num-compact">02</div>
+                        <div>
+                            <h4>Place Bid</h4>
+                            <p>Submit bid secretly</p>
+                        </div>
+                    </div>
+                    <div class="step-card-compact">
+                        <div class="step-num-compact">03</div>
+                        <div>
+                            <h4>Auction Evaluation</h4>
+                            <p>Compare all bids</p>
+                        </div>
+                    </div>
+                    <div class="step-card-compact">
+                        <div class="step-num-compact">04</div>
+                        <div>
+                            <h4>Winner Determined</h4>
+                            <p>Highest bid wins</p>
+                        </div>
+                    </div>
+                    <div class="step-card-compact">
+                        <div class="step-num-compact">05</div>
+                        <div>
+                            <h4>Second-Price Payment</h4>
+                            <p>Winner pays 2nd highest</p>
+                        </div>
+                    </div>
+                    <div class="step-card-compact">
+                        <div class="step-num-compact">06</div>
+                        <div>
+                            <h4>Utility Calculated</h4>
+                            <p>Valuation &minus; Payment</p>
+                        </div>
+                    </div>
+                    <div class="step-card-compact">
+                        <div class="step-num-compact">07</div>
+                        <div>
+                            <h4>Next Round</h4>
+                            <p>Continue for 8 rounds</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="info-section text-center">
+                <p class="final-objective">Make informed bids, maximize your utility, and compete strategically across all 8 rounds.</p>
+            </section>
+        </div>
+    </div>
+
+    <!-- GAME PAGE -->
+    <div id="game-page" class="game-page hidden">
+        <header class="game-header">
+        <div class="header-titles">
+            <h1>Auction Arena</h1>
+            <h2>Where Strategy Meets Bidding</h2>
+        </div>
+        <div class="header-actions">
+            <div class="round-info">
+                <span class="round-text" id="current-round-text">ROUND 1 / 5</span>
+            </div>
+            <button id="new-game-btn" class="secondary-btn">NEW GAME</button>
+        </div>
+    </header>
+
+    <main class="game-container">
+        <div class="main-content">
+            <section class="item-card">
+                <div class="item-header">CURRENT ITEM</div>
+                <div class="item-name" id="item-name">📱 Smartphone</div>
+                
+                <div class="valuation-section">
+                    <div class="valuation-label">YOUR PRIVATE VALUATION</div>
+                    <div class="valuation-amount" id="player-valuation">₹50,000</div>
+                    <div class="valuation-note">This is exactly what the item is worth to you. Keep it secret.</div>
+                </div>
+            </section>
+
+            <section class="bidding-section" id="bidding-section">
+                <h3 class="bidding-title">PLACE YOUR BID</h3>
+                <div class="input-group">
+                    <span class="currency-symbol">₹</span>
+                    <input type="number" id="bid-input" placeholder="Enter your bid" min="0" step="1">
+                </div>
+                <div id="validation-msg" class="validation-error"></div>
+                <button id="place-bid-btn" class="primary-btn">SUBMIT BID</button>
+                <p class="helper-text">Choose your bid based on your private valuation.</p>
+            </section>
+
+            <section class="result-section hidden" id="result-section">
+                <h3 class="result-title" id="result-title">🏆 YOU WON!</h3>
+                <div class="result-details" id="result-details">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="bid-breakdown">
+                    <h4>BID BREAKDOWN</h4>
+                    <ul id="bid-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+
+                <div class="rule-explanation">
+                    <strong>Vickrey Rule:</strong> The highest bidder wins, but the winner pays the second-highest bid.
+                    <p id="rule-note" class="rule-note">Your payment was based on the second-highest bid.</p>
+                </div>
+
+                <button id="next-round-btn" class="primary-btn">NEXT ROUND &rarr;</button>
+            </section>
+
+            <section class="final-summary-section hidden" id="final-summary-section">
+                <h3 class="result-title">🏆 AUCTION COMPLETE</h3>
+                <p class="final-subtitle">Your Performance</p>
+                
+                <div class="final-stats">
+                    <div class="final-stat-box">
+                        <div class="stat-label">Rounds Won</div>
+                        <div class="stat-value" id="final-rounds-won">0 / 8</div>
+                    </div>
+                    <div class="final-stat-box">
+                        <div class="stat-label">Win Rate</div>
+                        <div class="stat-value" id="final-win-rate">0.0%</div>
+                    </div>
+                    <div class="final-stat-box">
+                        <div class="stat-label">Total Paid</div>
+                        <div class="stat-value" id="final-total-paid">₹0</div>
+                    </div>
+                    <div class="final-stat-box">
+                        <div class="stat-label">Total Utility</div>
+                        <div class="stat-value" id="final-total-utility">₹0</div>
+                    </div>
+                </div>
+
+                <p id="final-message" class="final-message">Great bidding!</p>
+
+                <div class="evaluation-info-section">
+                    <h4 class="evaluation-title">HOW WAS YOUR PERFORMANCE EVALUATED?</h4>
+                    <p class="evaluation-intro">Your final performance is evaluated using the Vickrey auction mechanism, utility, and overall bidding efficiency.</p>
+                    
+                    <div class="evaluation-cards-grid">
+                        <div class="eval-card">
+                            <div class="eval-icon">⚖️</div>
+                            <h5>Auction Mechanism</h5>
+                            <p>Vickrey (Second-Price Sealed-Bid) Auction</p>
+                        </div>
+                        <div class="eval-card">
+                            <div class="eval-icon">📊</div>
+                            <h5>Utility Calculation</h5>
+                            <p>Utility = Private Valuation &minus; Payment</p>
+                        </div>
+                        <div class="eval-card">
+                            <div class="eval-icon">🎯</div>
+                            <h5>Overall Performance</h5>
+                            <p>Total Utility is the primary metric, with Rounds Won and Win Rate as supporting indicators.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="play-again-btn" class="primary-btn">PLAY AGAIN</button>
+            </section>
+        </div>
+
+        <aside class="sidebar">
+            <section class="scoreboard-card">
+                <div class="stat-box">
+                    <div class="stat-label">ROUNDS WON</div>
+                    <div class="stat-value"><span id="rounds-won">0</span> <span class="stat-icon">🏆</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">TOTAL PAID</div>
+                    <div class="stat-value"><span id="total-paid">₹0</span> <span class="stat-icon">💰</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">TOTAL UTILITY</div>
+                    <div class="stat-value"><span id="total-utility">₹0</span> <span class="stat-icon">⭐</span></div>
+                </div>
+            </section>
+
+            <section class="rules-card">
+                <h3>HOW IT WORKS</h3>
+                <ul>
+                    <li>Highest bid wins the item.</li>
+                    <li>The winner pays the second-highest bid.</li>
+                </ul>
+                <div class="utility-note">
+                    <strong>Note:</strong> Your utility = Your valuation &minus; Payment
+                </div>
+            </section>
+        </aside>
+    </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
